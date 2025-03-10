@@ -1,1 +1,19 @@
 #Este archivo contiene datos RAW recopilados y usados para el entrenmiento del modelo.
+
+#Inicio IPC
+
+-IPC 2022
+
+0.1312
+
+-IPC 2023
+
+0.928
+
+-IPC 2024
+
+0.52
+
+-Fuentes
+
+https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc/ipc-informacion-tecnica
