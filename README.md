@@ -50,7 +50,9 @@ Especificaciones de implementacion tecnica:
 -Desarrollo y entrenamiento de IA:
 
   -Lenguaje de programacion: Python (.py)
+  
   -Modelo: Regresión multivariable (MLR, mas info en: https://www.ugr.es/~montero/matematicas/regresion_lineal.pdf     ----     https://seh-lelha.org/construccion-modelos-regresion-    multivariantes/)
+  
   -Datos: Recoleccion manual para mercados locales, uso de barridos (Sweeps) para recopliacion de informacion de cadenas e historicos de precios nacionales.
 
 
