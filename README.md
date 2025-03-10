@@ -44,3 +44,6 @@ Utilizar el formato convencional de commits:
 
 tipo: descripción breve (issue #X)
 
+
+Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki/FeedBack-Home-Wiki
+
