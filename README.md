@@ -45,15 +45,15 @@ El desarrollo sigue una metodología ágil con sprints. Cada sprint debe tener t
 - tipo: descripción breve (issue #X)
 
 ------------------------------------------------------------------------------------------------------------------------------
-Especificaciones de implementacion tecnica:
+# Especificaciones de implementacion tecnica:
 
--Desarrollo y entrenamiento de IA:
+# Desarrollo y entrenamiento de IA:
 
-  -Lenguaje de programacion: Python (.py)
+  - Lenguaje de programacion: Python (.py)
   
-  -Modelo: Regresión multivariable (MLR, mas info en: https://www.ugr.es/~montero/matematicas/regresion_lineal.pdf     ----     https://seh-lelha.org/construccion-modelos-regresion-    multivariantes/)
+  - Modelo: Regresión multivariable (MLR, mas info en: https://www.ugr.es/~montero/matematicas/regresion_lineal.pdf     ----     https://seh-lelha.org/construccion-modelos-regresion-    multivariantes/)
   
-  -Datos: Recoleccion manual para mercados locales, uso de barridos (Sweeps) para recopliacion de informacion de cadenas e historicos de precios nacionales.
+  - Datos: Recoleccion manual para mercados locales, uso de barridos (Sweeps) para recopliacion de informacion de cadenas e historicos de precios nacionales.
 
 
 Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki/FeedBack-Home-Wiki
