@@ -1,0 +1,64 @@
+1. Autenticación de usuarios (Login)
+Contraseñas seguras: Utiliza una política de contraseñas fuertes que obligue a los usuarios a tener contraseñas complejas (con una combinación de letras mayúsculas, minúsculas, números y caracteres especiales).
+
+Hashing de contraseñas: No almacenes contraseñas en texto claro. En su lugar, utiliza algoritmos de hash seguros como bcrypt o Argon2 para almacenar las contraseñas de manera segura.
+
+Salting: Añade un "salt" aleatorio a las contraseñas antes de hacer el hash. Esto asegura que dos contraseñas iguales no tengan el mismo hash.
+
+Autenticación multifactor (MFA): Implementa una capa adicional de seguridad usando un sistema de autenticación multifactor, como un código enviado por SMS o a través de una aplicación de autenticación como Google Authenticator. Esto agrega una barrera extra incluso si un atacante obtiene la contraseña.
+
+2. Protección contra ataques de inyección SQL
+Consultas preparadas (Prepared Statements): Usa consultas preparadas o consultas parametrizadas para evitar que los atacantes puedan inyectar código SQL malicioso en los formularios de login o búsqueda.
+
+Validación y escape de entrada: Valida todas las entradas de los usuarios antes de procesarlas (como en formularios de login y búsqueda de productos). Usa funciones específicas para escapar caracteres especiales.
+
+3. Protección contra Cross-Site Scripting (XSS)
+Escapado de salida: Asegúrate de escapar correctamente cualquier dato de entrada del usuario cuando se muestre en la página web, para evitar que se ejecute código JavaScript malicioso (XSS). Las bibliotecas como DOMPurify pueden ayudarte a sanitizar contenido HTML.
+
+Política de Seguridad de Contenido (CSP): Implementa una política de seguridad de contenido estricta (CSP) que impida que se carguen scripts de orígenes no confiables y reduce el riesgo de ataques XSS.
+
+4. Protección contra Cross-Site Request Forgery (CSRF)
+Tokens CSRF: Utiliza tokens CSRF en los formularios que realizan acciones sensibles (como iniciar sesión, cambiar contraseñas, hacer compras, etc.) para asegurarte de que la solicitud proviene de la página legítima y no de un sitio malicioso.
+
+SameSite Cookies: Configura tus cookies con el atributo SameSite para evitar que los navegadores envíen cookies en solicitudes de otros dominios, lo que ayuda a prevenir ataques CSRF.
+
+5. Cifrado de datos sensibles
+Cifrado en tránsito (SSL/TLS): Asegúrate de que toda la información sensible, como los datos de inicio de sesión y las transacciones, se cifren en tránsito usando HTTPS. Utiliza un certificado SSL/TLS válido para garantizar que la comunicación entre el navegador del usuario y el servidor esté protegida.
+
+Cifrado de datos en reposo: Si almacenas datos sensibles (como información de pago o direcciones de envío), asegúrate de cifrarlos utilizando algoritmos fuertes como AES-256.
+
+6. Control de acceso
+Roles de usuario: Define roles de usuario (por ejemplo, administrador, usuario regular) y asegúrate de que solo los usuarios con el rol adecuado puedan acceder a funciones o páginas específicas (como la administración de productos o la gestión de usuarios).
+
+Control de acceso basado en permisos: Implementa un control de acceso granular, donde se asegure que los usuarios solo puedan realizar las acciones a las que están autorizados. Usa una lista de control de acceso (ACL) o un sistema similar.
+
+7. Protección contra ataques de fuerza bruta
+Límites de intentos de inicio de sesión: Implementa una limitación de intentos de inicio de sesión para protegerte contra ataques de fuerza bruta. Después de varios intentos fallidos de inicio de sesión, bloquea temporalmente la cuenta o pide al usuario realizar una autenticación adicional (como CAPTCHA).
+
+CAPTCHA: Usa un sistema CAPTCHA (como Google reCAPTCHA) para proteger formularios de inicio de sesión, registro y otros formularios importantes de los robots automatizados.
+
+8. Monitoreo y registro de actividad
+Registro de eventos: Lleva un registro de todas las actividades importantes del sistema, como los intentos de inicio de sesión, los cambios en los datos del usuario, las búsquedas de productos, etc. Almacena estos registros de forma segura y con acceso restringido.
+
+Monitoreo de seguridad: Implementa herramientas de monitoreo para detectar actividades sospechosas o intentos de intrusión, como fail2ban o Sentry.
+
+9. Protección de la base de datos
+Seguridad en la base de datos: Utiliza técnicas de seguridad como el cifrado de la base de datos, el uso de conexiones seguras (SSL/TLS) a la base de datos, y la segmentación de datos sensibles en bases de datos separadas si es necesario.
+
+Backups cifrados: Realiza copias de seguridad periódicas de la base de datos, asegurándote de que los respaldos estén cifrados y almacenados en un lugar seguro.
+
+10. Actualizaciones regulares y parches de seguridad
+Actualización del software: Mantén siempre actualizado el sistema operativo, las dependencias del servidor (como Apache, Nginx, PHP, Python, etc.) y cualquier framework o CMS que estés utilizando. Instala parches de seguridad tan pronto como estén disponibles.
+
+Pruebas de seguridad: Realiza pruebas periódicas de seguridad (como pruebas de penetración) para identificar vulnerabilidades.
+
+11. Seguridad en la nube (si corresponde)
+Si tu aplicación está alojada en la nube, aprovecha las herramientas de seguridad proporcionadas por el proveedor de la nube (como AWS, Azure o Google Cloud), como firewalls, protección DDoS, y configuraciones de redes privadas.
+
+12. Política de privacidad y cumplimiento legal
+Cumplimiento con leyes de privacidad: Si estás manejando datos personales, como el nombre, correo electrónico, dirección o datos financieros, asegúrate de cumplir con las regulaciones de privacidad como el GDPR (Reglamento General de Protección de Datos de la UE) o la Ley de Protección de Datos Personales en Colombia.
+
+Avisos de privacidad: Implementa y proporciona avisos de privacidad claros sobre el uso de datos y cómo los usuarios pueden controlar su información.
+
+13. Backup y recuperación ante desastres
+Plan de recuperación ante desastres: Asegúrate de tener un plan de contingencia en caso de un ataque de seguridad o una pérdida de datos significativa. Realiza pruebas de restauración periódicas de tus backups.
