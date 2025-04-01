@@ -55,6 +55,8 @@ Especificaciones de implementacion tecnica:
   
   -Datos: Recoleccion manual para mercados locales, uso de barridos (Sweeps) para recopliacion de informacion de cadenas e historicos de precios nacionales.
 
+  -Uso de algoritmo de scraping web en Python por medio de Selenium y BeautifulSoup4 (Olimpica, Jumbo, Exito, etc.).
+
 
 Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki/FeedBack-Home-Wiki
 
