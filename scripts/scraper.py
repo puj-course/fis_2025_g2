@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service as EdgeService
-from selenium.webdriver.edge.options import Options as EdgeOptions
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
@@ -51,12 +51,14 @@ EXCEL_FILE = "canasta_familiar_precios.xlsx"
 
 # 🔍 Scraping general con filtros
 def scrape_product_prices(category_url, product_label, unidad_regex, pages=5):
-    options = EdgeOptions()
+    options = ChromeOptions()
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Edge(
-        service=EdgeService(EdgeChromiumDriverManager().install()),
+    driver = webdriver.Chrome(
+        service=ChromeService(ChromeDriverManager().install()),
         options=options
     )
 
@@ -86,32 +88,29 @@ def scrape_product_prices(category_url, product_label, unidad_regex, pages=5):
             if match:
                 price = float(match.group().replace(".", "").replace(",", "."))
 
-                # 🔍 Detectar cantidad si viene en paquete (x6, x12, etc.)
                 unidades_match = re.search(r"x\s?(\d{1,2})", name)
                 unidades = int(unidades_match.group(1)) if unidades_match else 1
                 precio_unitario = round(price / unidades, 2)
 
-                # Aceite: filtro adicional
                 if "aceite" in product_label.lower():
                     if re.search(unidad_regex, name) and re.search(r"(aceite).*(soya|vegetal|mezcla|girasol|canola|cocina)", name):
                         prices.append(precio_unitario)
                         print(f"   ✅ ACEPTADO '{name}' → total: {price}, unidades: {unidades}, unitario: {precio_unitario}")
                     else:
                         print(f"   ❌ DESCARTADO '{name}' (no cumple unidad y/o tipo)")
-                # Leche: permitir paquetes de 1L xN
                 elif "leche" in product_label.lower():
                     if re.search(unidad_regex, name):
                         prices.append(precio_unitario)
                         print(f"   ✅ ACEPTADO '{name}' → total: {price}, unidades: {unidades}, unitario: {precio_unitario}")
                     else:
                         print(f"   ❌ DESCARTADO '{name}' (no coincide con unidad esperada)")
-                # Resto
                 else:
                     if re.search(unidad_regex, name):
                         prices.append(price)
                         print(f"   ✅ ACEPTADO '{name}' → {price}")
                     else:
                         print(f"   ❌ DESCARTADO '{name}' (no coincide con unidad esperada)")
+
     driver.quit()
     return prices
 
