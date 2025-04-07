@@ -23,6 +23,13 @@ jobs:
       - name: Dar permisos a scripts
         run: chmod +x scripts/*.sh
 
+      - name: Diagnóstico – Ver contenido del repo
+        run: |
+          echo "🔍 En raíz:"
+          ls -l
+          echo "📂 En scripts/:"
+          ls -l scripts/
+          
       - name: Setup
         run: ./scripts/setup.sh
 
