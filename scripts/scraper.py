@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
@@ -11,54 +11,192 @@ import time
 
 # ✅ Diccionario de productos y criterios
 PRODUCT_CATEGORIES = {
+    # Olímpica
     "Arroz 1KG": {
         "url": "https://www.olimpica.com/arroz?page={page}",
-        "unidad": r"\b(1[\s]?kg|1000g|1k)\b"
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Azúcar 1KG": {
         "url": "https://www.olimpica.com/azucar?_q=Azucar&map=ft&page={page}",
-        "unidad": r"\b(1[\s]?kg|1[\s]?k|1000[\s]?g|1\.000[\s]?g|1kilo|1 kilo)\b"
+        "unidad": r"\b(1[\s]?kg|1[\s]?k|1000[\s]?g|1\.000[\s]?g|1kilo|1 kilo)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Aceite 3L Cocina": {
         "url": "https://www.olimpica.com/aceites?page={page}",
-        "unidad": r"\b(3[\s]?(l|lt|litros)|3000[\s]?ml)\b"
+        "unidad": r"\b(3[\s]?(l|lt|litros)|3000[\s]?ml)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Huevos 30": {
         "url": "https://www.olimpica.com/huevos?page={page}",
-        "unidad": r"\b(30[\s]?(und|unidades|huevos))\b"
+        "unidad": r"\b(30[\s]?(und|unidades|huevos))\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Leche 1L": {
         "url": "https://www.olimpica.com/leche?page={page}",
-        "unidad": r"\b(1[\s]?(l|lt)|1 litro|1000ml)\b"
+        "unidad": r"\b(1[\s]?(l|lt)|1 litro|1000ml)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Pan tajado": {
         "url": "https://www.olimpica.com/panes?page={page}",
-        "unidad": r"(tajado|molde|rebanad)"
+        "unidad": r"(tajado|molde|rebanad)",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Papa 1.5KG o 2.5KG": {
         "url": "https://www.olimpica.com/papa?page={page}",
-        "unidad": r"\b((1[.,]5[\s]?kg|1500g|1[\s]?1/2[\s]?kg)|(2[.,]5[\s]?kg|2500g|2[\s]?1/2[\s]?kg))\b"
+        "unidad": r"\b((1[.,]5[\s]?kg|1500g|1[\s]?1/2[\s]?kg)|(2[.,]5[\s]?kg|2500g|2[\s]?1/2[\s]?kg))\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
     },
     "Fríjol 500G": {
         "url": "https://www.olimpica.com/frijol?page={page}",
-        "unidad": r"\b(500[\s]?g|0[.,]?5[\s]?kg|1/2[\s]?kg|½[\s]?kg)\b"
-    }
+        "unidad": r"\b(500[\s]?g|0[.,]?5[\s]?kg|1/2[\s]?kg|½[\s]?kg)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    # Jumbo
+    "Arroz 1KG": {
+        "url": "https://www.jumbocolombia.com/arroz?_q=Arroz&map=ft",
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "div.product-card__name",
+            "price": "div.product-card__price"
+        }
+    },
+
+    "Azúcar 1KG": {
+        "url": "https://www.olimpica.com/azucar?_q=Azucar&map=ft&page={page}",
+        "unidad": r"\b(1[\s]?kg|1[\s]?k|1000[\s]?g|1\.000[\s]?g|1kilo|1 kilo)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Aceite 3L Cocina": {
+        "url": "https://www.olimpica.com/aceites?page={page}",
+        "unidad": r"\b(3[\s]?(l|lt|litros)|3000[\s]?ml)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Huevos 30": {
+        "url": "https://www.olimpica.com/huevos?page={page}",
+        "unidad": r"\b(30[\s]?(und|unidades|huevos))\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Leche 1L": {
+        "url": "https://www.olimpica.com/leche?page={page}",
+        "unidad": r"\b(1[\s]?(l|lt)|1 litro|1000ml)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Pan tajado": {
+        "url": "https://www.olimpica.com/panes?page={page}",
+        "unidad": r"(tajado|molde|rebanad)",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Papa 1.5KG o 2.5KG": {
+        "url": "https://www.olimpica.com/papa?page={page}",
+        "unidad": r"\b((1[.,]5[\s]?kg|1500g|1[\s]?1/2[\s]?kg)|(2[.,]5[\s]?kg|2500g|2[\s]?1/2[\s]?kg))\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    "Fríjol 500G": {
+        "url": "https://www.olimpica.com/frijol?page={page}",
+        "unidad": r"\b(500[\s]?g|0[.,]?5[\s]?kg|1/2[\s]?kg|½[\s]?kg)\b",
+        "selectors": {
+            "name": "span.vtex-product-summary-2-x-productBrand",
+            "price": "div.olimpica-dinamic-flags-0-x-priceContainer"
+        }
+    },
+    
+    # Ara
+    "Arroz 1KG Ara": {
+        "url": "https://www.ara.com.co/supermercado/arroz?page={page}",
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "span.product-name",
+            "price": "span.price"
+        }
+    },
+    "Azúcar 1KG Ara": {
+        "url": "https://www.ara.com.co/supermercado/azucar?page={page}",
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "span.product-name",
+            "price": "span.price"
+        }
+    },
+    # Exito
+    "Arroz 1KG Exito": {
+        "url": "https://www.exito.com/categoria/arroz?page={page}",
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "h4.product-title",
+            "price": "span.product-price"
+        }
+    },
+    "Azúcar 1KG Exito": {
+        "url": "https://www.exito.com/categoria/azucar?page={page}",
+        "unidad": r"\b(1[\s]?kg|1000g|1k)\b",
+        "selectors": {
+            "name": "h4.product-title",
+            "price": "span.product-price"
+        }
+    },
 }
 
 PAGES_PER_PRODUCT = 5
-SITE_NAME = "Olimpica"
+SITE_NAME = "Supermercados"
 EXCEL_FILE = "canasta_familiar_precios.xlsx"
 
 # 🔍 Scraping general con filtros
-def scrape_product_prices(category_url, product_label, unidad_regex, pages=5):
-    options = ChromeOptions()
+def scrape_product_prices(category_url, product_label, unidad_regex, selectors, pages=5):
+    """
+    Scrapea los precios de productos de diferentes supermercados (Jumbo, Ara, Éxito, Olímpica) 
+    basándose en los selectores proporcionados.
+    """
+    options = EdgeOptions()
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Chrome(
-        service=ChromeService(ChromeDriverManager().install()),
+    driver = webdriver.Edge(
+        service=EdgeService(EdgeChromiumDriverManager().install()),
         options=options
     )
 
@@ -71,12 +209,17 @@ def scrape_product_prices(category_url, product_label, unidad_regex, pages=5):
         time.sleep(5)
 
         soup = BeautifulSoup(driver.page_source, "html.parser")
-        product_cards = soup.select("article.vtex-product-summary-2-x-element")
+        # Ajustar el selector de producto dependiendo del supermercado
+        if product_label in ["Arroz 1KG Jumbo", "Arroz 1KG Exito"]:  # Ajuste según el sitio
+            product_cards = soup.select("div.product-card")  # Para Jumbo y Éxito
+        else:
+            product_cards = soup.select("article.vtex-product-summary-2-x-element")  # Para Olímpica, Ara
+
         print(f"   📦 {len(product_cards)} productos encontrados")
 
         for card in product_cards:
-            name_elem = card.select_one("span.vtex-product-summary-2-x-productBrand")
-            price_container = card.select_one("div.olimpica-dinamic-flags-0-x-priceContainer")
+            name_elem = card.select_one(selectors['name'])
+            price_container = card.select_one(selectors['price'])
 
             if not name_elem or not price_container:
                 continue
@@ -88,28 +231,17 @@ def scrape_product_prices(category_url, product_label, unidad_regex, pages=5):
             if match:
                 price = float(match.group().replace(".", "").replace(",", "."))
 
+                # Detectar unidad (si es necesario)
                 unidades_match = re.search(r"x\s?(\d{1,2})", name)
                 unidades = int(unidades_match.group(1)) if unidades_match else 1
                 precio_unitario = round(price / unidades, 2)
 
-                if "aceite" in product_label.lower():
-                    if re.search(unidad_regex, name) and re.search(r"(aceite).*(soya|vegetal|mezcla|girasol|canola|cocina)", name):
-                        prices.append(precio_unitario)
-                        print(f"   ✅ ACEPTADO '{name}' → total: {price}, unidades: {unidades}, unitario: {precio_unitario}")
-                    else:
-                        print(f"   ❌ DESCARTADO '{name}' (no cumple unidad y/o tipo)")
-                elif "leche" in product_label.lower():
-                    if re.search(unidad_regex, name):
-                        prices.append(precio_unitario)
-                        print(f"   ✅ ACEPTADO '{name}' → total: {price}, unidades: {unidades}, unitario: {precio_unitario}")
-                    else:
-                        print(f"   ❌ DESCARTADO '{name}' (no coincide con unidad esperada)")
+                # Filtrar por unidad y tipo de producto
+                if re.search(unidad_regex, name):
+                    prices.append(precio_unitario)
+                    print(f"   ✅ ACEPTADO '{name}' → total: {price}, unidades: {unidades}, unitario: {precio_unitario}")
                 else:
-                    if re.search(unidad_regex, name):
-                        prices.append(price)
-                        print(f"   ✅ ACEPTADO '{name}' → {price}")
-                    else:
-                        print(f"   ❌ DESCARTADO '{name}' (no coincide con unidad esperada)")
+                    print(f"   ❌ DESCARTADO '{name}' (no coincide con unidad esperada)")
 
     driver.quit()
     return prices
@@ -128,8 +260,9 @@ new_row = [today, SITE_NAME]
 for label, info in PRODUCT_CATEGORIES.items():
     url_template = info["url"]
     unidad_regex = info["unidad"]
+    selectors = info["selectors"]
 
-    product_prices = scrape_product_prices(url_template, label, unidad_regex, PAGES_PER_PRODUCT)
+    product_prices = scrape_product_prices(url_template, label, unidad_regex, selectors, PAGES_PER_PRODUCT)
 
     if product_prices:
         avg_price = round(sum(product_prices) / len(product_prices), 2)
