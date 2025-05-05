@@ -158,7 +158,7 @@ def scrape_product_prices(category_url, product_label, unidad_regex, pages, sele
         url = category_url.format(page=page)
         print(f"\n🔎 Buscando '{product_label}' en: {url}")
         driver.get(url)
-        time.sleep(2)
+        time.sleep(5)
 
         soup = BeautifulSoup(driver.page_source, "html.parser")
         product_cards = soup.select(selectors["card"])
