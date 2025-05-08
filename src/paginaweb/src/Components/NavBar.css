@@ -1,0 +1,46 @@
+/* NavBar.css */
+.navbar {
+    background-color: #2f855a; /* Verde de fondo */
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar-item {
+    margin-left: 2rem;
+  }
+  
+  .navbar-link {
+    font-size: 1.1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    color: #38a169; /* Color verde claro */
+    transform: scale(1.1);
+  }
+  

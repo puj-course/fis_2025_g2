@@ -1,4 +1,4 @@
-import { Producto } from "C:/Users/romer/feed-back/src/Models/Producto";
+import { Producto } from "../Models/Producto";
 
 export function obtenerProductosPrueba() {
   return [
