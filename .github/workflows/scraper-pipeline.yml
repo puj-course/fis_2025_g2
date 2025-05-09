@@ -1,0 +1,50 @@
+name: Scraper Automático
+
+on:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+jobs:
+  ejecutar_scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Dar permisos a scripts
+        run: chmod +x scripts/*.sh
+
+      - name: Diagnóstico – Ver contenido del repo
+        run: |
+          echo "🔍 En raíz:"
+          ls -l
+          echo "📂 En scripts/:"
+          ls -l scripts/
+          
+      - name: Setup
+        run: ./scripts/setup.sh
+
+      - name: Ejecutar script principal
+        run: python3 scripts/scraper.py
+
+      - name: Test de salida
+        run: ./scripts/test.sh
+
+      - name: Despliegue (simulado)
+        run: ./scripts/deploy.sh
+
+      - name: Guardar archivo Excel como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: precios-canasta
+          path: output/canasta_familiar_precios.xlsx
+
