@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { obtenerProductosPrueba } from 'C:/Users/romer/feed-back/src/Controllers/ProductoController';
+import { obtenerProductosPrueba } from '../Controllers/ProductoController';
 
 function Comparador() {
   const [productos, setProductos] = useState([]);

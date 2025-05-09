@@ -1,14 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
-import Home from './views/Home';
-import Comparador from './views/Comparador';
+import AppRouter from "./Routers/AppRouter";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/comparador" element={<Comparador />} />
-    </Routes>
-  );
+  return <AppRouter />;
 }
 
 export default App;
