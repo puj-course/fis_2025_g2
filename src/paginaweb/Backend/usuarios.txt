@@ -1,2 +1,1 @@
-carlos,123
-pere,123
+hola,iyhjhghjgjhg@hotmail.com,123,123,true

@@ -4,39 +4,39 @@ const path = require("path");
 
 const usuariosPath = path.join(__dirname, "usuarios.txt");
 
+// Lee y parsea el archivo usuarios.txt
 function leerUsuarios() {
   if (!fs.existsSync(usuariosPath)) return [];
-  const data = fs.readFileSync(usuariosPath, "utf-8");
-  return data
+  return fs.readFileSync(usuariosPath, "utf-8")
     .split("\n")
-    .filter(linea => linea)
+    .filter(Boolean)
     .map(linea => {
-      const [nombreUsuario, contrasena] = linea.split(",");
-      return { nombreUsuario, contrasena };
+      const [username, email, phone, password, isPremium] = linea.split(",");
+      return {
+        username,
+        email,
+        phone,
+        password,
+        isPremium: isPremium === "true"
+      };
     });
 }
 
-function guardarUsuario(usuario) {
-  const linea = `${usuario.nombreUsuario},${usuario.contrasena}\n`;
+// Registra un usuario; devuelve false si el username ya existe
+function register(username, email, phone, password, isPremium) {
+  const usuarios = leerUsuarios();
+  if (usuarios.some(u => u.username === username)) return false;
+  const linea = `${username},${email},${phone},${password},${isPremium}\n`;
   fs.appendFileSync(usuariosPath, linea, "utf-8");
-}
-
-function login(nombreUsuario, contrasena) {
-  const usuarios = leerUsuarios();
-  return usuarios.find(
-    (u) => u.nombreUsuario === nombreUsuario && u.contrasena === contrasena
-  );
-}
-
-function register(nombreUsuario, contrasena) {
-  const usuarios = leerUsuarios();
-  const existe = usuarios.some((u) => u.nombreUsuario === nombreUsuario);
-  if (existe) return false;
-  guardarUsuario({ nombreUsuario, contrasena });
   return true;
 }
 
-module.exports = {
-  login,
-  register,
-};
+// Valida login por username + password y devuelve el objeto usuario
+function login(username, password) {
+  const usuarios = leerUsuarios();
+  return usuarios.find(u =>
+    u.username === username && u.password === password
+  ) || null;
+}
+
+module.exports = { leerUsuarios, register, login };
