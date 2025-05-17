@@ -1,46 +1,62 @@
-/* NavBar.css */
+/* src/components/NavBar.css */
+
+/* Reset global body margin (añádelo a tu CSS global si no existe) */
+body {
+  margin: 0;
+}
+
+/* Barra fija en top, full-width */
 .navbar {
-    background-color: #2f855a; /* Verde de fondo */
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .navbar-menu {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .navbar-item {
-    margin-left: 2rem;
-  }
-  
-  .navbar-link {
-    font-size: 1.1rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-link:hover {
-    color: #38a169; /* Color verde claro */
-    transform: scale(1.1);
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #6a11cb;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Contenedor interno sin límites de ancho */
+.navbar-container {
+  width: 100% !important;
+  max-width: none !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo a la izquierda */
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+/* Menú de enlaces a la derecha */
+.navbar-menu {
+  display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 2rem;
+}
+
+.navbar-item {
+  margin: 0;
+}
+
+.navbar-link {
+  font-size: 1.1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.navbar-link:hover {
+  color: #38a169;
+  transform: scale(1.1);
+}

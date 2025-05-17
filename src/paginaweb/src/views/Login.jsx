@@ -1,55 +1,106 @@
+// src/views/Login.jsx
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { AuthService } from "../Services/AuthService";
+import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import "./Login.css";
 
 export default function Login() {
-  const [nombreUsuario, setNombreUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const usuario = await AuthService.login(nombreUsuario, contrasena);
-
-    if (usuario) {
-      setError("");
-      navigate("/"); // Cambia la ruta a donde quieras ir tras iniciar sesión
-    } else {
-      setError("Nombre de usuario o contraseña incorrectos.");
+    setLoading(true);
+    setError("");
+    try {
+      const user = await AuthService.login(username, password);
+      if (user.isPremium) navigate("/prediccion");
+      else navigate("/comparador");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <div style={{ maxWidth: "400px", margin: "auto", marginTop: "50px" }}>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre de usuario:</label>
-          <input
-            type="text"
-            value={nombreUsuario}
-            onChange={(e) => setNombreUsuario(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Ingresar</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.1 } }
+  };
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show:   { opacity: 1, y: 0 }
+  };
 
-      {/* Enlace al registro (Paso 3 que mencionaste) */}
-      <p style={{ marginTop: "10px" }}>
-        ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
-      </p>
+  return (
+    <div className="bg-gradient full-screen flex-center">
+      <motion.div
+        className="login-glass"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.h2 variants={item} className="logo-text">
+          Feedback
+        </motion.h2>
+        <motion.p variants={item} className="subtitle">
+          Predicción de precios de la canasta familiar
+        </motion.p>
+
+        <motion.form
+          onSubmit={handleSubmit}
+          className="form-stack"
+          variants={item}
+        >
+          <label htmlFor="username">Usuario</label>
+          <motion.input
+            variants={item}
+            id="username"
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            placeholder="Ingresa tu usuario"
+            required
+          />
+
+          <label htmlFor="password">Contraseña</label>
+          <motion.input
+            variants={item}
+            id="password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Ingresa tu contraseña"
+            required
+          />
+
+          <motion.button
+            variants={item}
+            type="submit"
+            className="btn-primary"
+            disabled={loading}
+          >
+            {loading
+              ? <span className="spinner"></span>
+              : "Ingresar"}
+          </motion.button>
+        </motion.form>
+
+        {error && (
+          <motion.p variants={item} className="error-text">
+            {error}
+          </motion.p>
+        )}
+
+        <motion.p variants={item} className="register-text">
+          ¿No tienes cuenta?{" "}
+          <Link to="/register">Regístrate</Link>
+        </motion.p>
+      </motion.div>
     </div>
   );
 }

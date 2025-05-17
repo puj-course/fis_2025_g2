@@ -1,37 +1,28 @@
 // src/Services/AuthService.js
+const API = "http://localhost:3001";
 
 export const AuthService = {
-  async login(nombreUsuario, contrasena) {
-    const res = await fetch("http://localhost:3001/login", {
+  async register({ username, email, phone, password, isPremium }) {
+    const res = await fetch(`${API}/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nombreUsuario, contrasena }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, phone, password, isPremium }),
     });
-
-    if (!res.ok) {
-      throw new Error("Credenciales inválidas");
-    }
-
     const data = await res.json();
-    return data.user;
+    if (!res.ok) throw new Error(data.message || "Error al registrar");
+    return data;
   },
 
-  async registrar(nombreUsuario, contrasena) {
-    const res = await fetch("http://localhost:3001/register", {
+  async login(username, password) {
+    const res = await fetch(`${API}/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nombreUsuario, contrasena }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
     });
-
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || "Error al registrar");
-    }
-
-    return data;
+    if (!res.ok) throw new Error(data.message || "Credenciales inválidas");
+    // guarda en localStorage
+    localStorage.setItem("user", JSON.stringify(data.user));
+    return data.user;
   },
 };
