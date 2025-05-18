@@ -21,6 +21,7 @@ COPY src/ ./src/
 # Instalar dependencias Python
 WORKDIR /app/src/paginaweb/Backend
 RUN cat requirements.txt
+RUN python3 -m pip install --upgrade pip setuptools wheel
 RUN pip3 install pandas numpy openpyxl requests
 RUN pip3 install scikit-learn
 RUN pip3 install xgboost
