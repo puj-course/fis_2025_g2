@@ -98,7 +98,7 @@ class TestDecorators(unittest.TestCase):
         result = decorator.send("Mensaje de prueba")
         
         self.assertTrue(result)
-        mock_print.assert_any_call("Enviando mensaje: Mensaje de prue...")
+        mock_print.assert_any_call("Enviando mensaje: Mensaje de prueba...")
         mock_print.assert_any_call("Resultado envío: Éxito")
 
 class TestIntegration(unittest.TestCase):
