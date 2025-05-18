@@ -116,7 +116,7 @@ class TestAdvancedCases(unittest.TestCase):
         """Prueba días de predicción inválidos"""
         with self.assertRaises(ValueError):
             _predict_for_tienda('Exito', -5, 'premium')
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             _predict_for_tienda('Exito', 'cinco', 'free')
     
     def test_strategy_interface(self):
