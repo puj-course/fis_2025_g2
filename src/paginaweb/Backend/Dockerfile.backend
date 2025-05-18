@@ -1,23 +1,22 @@
 FROM node:18-slim
 
-# Instala Python
+# Instalar Python y pip
 RUN apt-get update && apt-get install -y python3 python3-pip
 
-# Carpeta base
+# Crear carpeta base
 WORKDIR /app
 
-# Copiar todo el código fuente
+# Copiar todo el código de src (incluye paginaweb y AI)
 COPY src/ ./src/
 
-# Ir a la carpeta correcta
+# 🐍 Instalar dependencias Python
 WORKDIR /app/src/paginaweb/Backend
-
-# Instalar dependencias Python
 RUN pip3 install --no-cache-dir -r requirements.txt
 
- WORKDIR /app/src/paginaweb
- RUN npm install
+# 🟢 Instalar dependencias JS desde paginaweb (donde está package.json)
+WORKDIR /app/src/paginaweb
+RUN npm install
 
-# Volver al backend para ejecutar
+# Volver al Backend para ejecutar Node.js
 WORKDIR /app/src/paginaweb/Backend
 CMD ["node", "server.js"]
