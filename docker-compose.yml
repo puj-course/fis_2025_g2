@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: src/paginaweb/Backend/Dockerfile.backend
+    working_dir: /app/src/paginaweb/Backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src  
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/paginaweb/Dockerfile.frontend
+    working_dir: /app/src/paginaweb
+    ports:
+      - "80:80" 
+    volumes:
+      - ./src/paginaweb:/app/src/paginaweb  

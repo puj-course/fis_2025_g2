@@ -1,0 +1,15 @@
+# Etapa 1: Build con Vite
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+COPY src/paginaweb/ .
+RUN npm install && npm run build
+
+# Etapa 2: Servir con nginx
+FROM nginx:alpine
+
+# Copiar archivos generados al directorio de nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
