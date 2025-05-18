@@ -18,10 +18,9 @@ WORKDIR /app
 # Copiar todo src
 COPY src/ ./src/
 
-RUN cat requirements.txt
-
 # Instalar dependencias Python
 WORKDIR /app/src/paginaweb/Backend
+RUN cat requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt --verbose
 
 WORKDIR /app/src/paginaweb
