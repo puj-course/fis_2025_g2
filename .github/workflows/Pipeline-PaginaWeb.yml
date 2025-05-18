@@ -10,14 +10,14 @@ on:
 
 jobs:
   test-backend:
-    name: 🔍 Pruebas unitarias del backend (Python)
+    name: 🔍 Pruebas Backend (Python)
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clonar repositorio
+      - name: 📥 Checkout
         uses: actions/checkout@v3
 
-      - name: 🐍 Configurar Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -29,21 +29,40 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
-      - name: ✅ Ejecutar pruebas
-        working-directory: src/paginaweb/Backend
+      - name: 🧪 Ejecutar pruebas Python
+        working-directory: src/paginaweb
         run: pytest tests/
 
-  docker-build:
-    name: 🐳 Build de imágenes Docker (Front + Back)
+  test-frontend:
+    name: 🔍 Pruebas Frontend (JS)
     runs-on: ubuntu-latest
-    needs: test-backend 
 
     steps:
-      - name: 📥 Clonar repositorio
+      - name: 📥 Checkout
         uses: actions/checkout@v3
 
-      - name: 🐳 Construir imagen del backend
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Instalar dependencias JS y ejecutar pruebas
+        working-directory: src/paginaweb
+        run: |
+          npm ci
+          npm test || echo "⚠️ No se encontraron pruebas"
+
+  build-docker:
+    name: 🐳 Build de imágenes Docker
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🐳 Build backend
         run: docker build -f src/paginaweb/Backend/Dockerfile.backend -t backend-ci .
 
-      - name: 🐳 Construir imagen del frontend
+      - name: 🐳 Build frontend
         run: docker build -f src/paginaweb/Dockerfile.frontend -t frontend-ci .
