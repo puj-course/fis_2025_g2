@@ -21,8 +21,7 @@ COPY src/ ./src/
 # Instalar dependencias Python
 WORKDIR /app/src/paginaweb/Backend
 RUN cat requirements.txt
-RUN set -ex && pip3 install --no-cache-dir -r requirements.txt --verbose
-
+RUN pip3 install --no-cache-dir -r requirements.txt
 WORKDIR /app/src/paginaweb
 RUN npm install
 
