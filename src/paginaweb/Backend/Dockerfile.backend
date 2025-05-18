@@ -1,22 +1,30 @@
 FROM node:18-slim
 
-# Instalar Python y pip
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Instalar Python y dependencias del sistema para ciencia de datos
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    build-essential \
+    python3-dev \
+    libatlas-base-dev \
+    libopenblas-dev \
+    liblapack-dev \
+    gfortran \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Crear carpeta base
+# Carpeta base
 WORKDIR /app
 
-# Copiar todo el código de src (incluye paginaweb y AI)
+# Copiar todo src
 COPY src/ ./src/
 
-# 🐍 Instalar dependencias Python
+# Instalar dependencias Python
 WORKDIR /app/src/paginaweb/Backend
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# 🟢 Instalar dependencias JS desde paginaweb (donde está package.json)
 WORKDIR /app/src/paginaweb
 RUN npm install
 
-# Volver al Backend para ejecutar Node.js
+# Ejecutar backend
 WORKDIR /app/src/paginaweb/Backend
 CMD ["node", "server.js"]
