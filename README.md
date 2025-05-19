@@ -1,51 +1,87 @@
 # fis_2025_g2
 fis_2025_g2
 
+# 🧠 Plataforma de Predicción de Precios y Notificación Automática (FEED-Back)
 
-# Descripción del Proyecto
+Proyecto web completo que permite predecir precios de productos y enviar notificaciones automáticas. Integra:
 
-Este repositorio contiene el desarrollo del proyecto para la materia de Física 2025, Grupo 2. Se implementan metodologías ágiles para la organización y ejecución de tareas.
+- Backend en **Python (FastAPI)** y **Node.js**
+- Frontend en **React + Vite**
+- Contenedores con **Docker y Docker Compose**
+- Automatización con **CI/CD usando GitHub Actions**
 
-# Contenido del Repositorio
+---
+# Diagramas
 
-- docs/: Contiene documentación del proyecto, incluyendo el archivo Excel con la historia de usuario.
+![Diagrama de Despliegue](docs/Diagramas/Diagrama%20de%20despliegue.png)
+![Diagrama de Componentes](docs/Diagramas/Diagrama%20de%20componentes.png)
+![Diagrama de Clases](docs/Diagramas/Diagrama%20de%20clases.png)
+![Diagrama EBC](docs/Diagramas/Diagarma%20EBC.png)
 
-- src/: Código fuente del proyecto.
 
-- scripts/: Scripts auxiliares.
+---
 
-- conf/: Archivos de configuración.
+## 📁 Estructura del Proyecto
 
-- temp/: Archivos temporales (se recomienda limpiar periódicamente).
+src/
+├── paginaweb/
+│ ├── Backend/
+│ │ ├── IA.py # Predicción con modelos de ML
+│ │ ├── notify.py # Envío de notificaciones (Telegram, etc.)
+│ │ ├── server.js # API Node.js / Interfaz con frontend
+│ │ └── requirements.txt
+│ ├── Components/ # Componentes React
+│ ├── Controllers/ # Lógica de control del frontend
+│ ├── Models/ # Modelos de datos JS
+│ ├── Routers/ # Rutas JS
+│ ├── Services/ # Servicios (API calls, etc.)
+│ ├── views/ # Vistas de la aplicación
+│ ├── App.jsx
+│ ├── main.jsx
+│ ├── index.css
+│ └── Dockerfile.frontend
+├── tests/ # Pruebas backend y frontend
+├── Dockerfile.backend
+├── docker-compose.yml
+└── .github/
+└── workflows/
+└── ci.yml # Pipeline CI/CD
 
-- .gitignore: Lista de archivos y directorios que no deben incluirse en el repositorio.
+---
 
-# Historia de Usuario
+## ⚙️ Requisitos
 
-El archivo docs/requisitos.xlsx contiene las historias de usuario definidas para el proyecto. Cada commit debe hacer referencia a una historia de usuario en su descripción.
+- Docker
+- Docker Compose
+- (Opcional) Node.js y Python si se desea ejecutar localmente sin contenedores
 
-# Organización del Proyecto
+⚙️ CI/CD con GitHub Actions
+Este repositorio cuenta con un pipeline automatizado definido en .github/workflows/ci.yml. El flujo CI/CD ejecuta:
 
-El desarrollo sigue una metodología ágil con sprints. Cada sprint debe tener tareas bien definidas y asignadas. Se recomienda seguir estos principios:
+✅ Pruebas Backend: Ejecuta pytest sobre src/paginaweb/tests
 
-- Cumplir con las tareas definidas en cada sprint.
+✅ Pruebas Frontend: Corre npm test tras npm ci
 
-- No postergar las actividades hasta la última semana.
+🐳 Build de imágenes Docker: Solo si todas las pruebas anteriores son exitosas
 
-- Asegurar avances constantes y documentados.
+Desencadenadores
+El pipeline se ejecuta automáticamente en:
 
-- Mantener un registro de commits organizados y vinculados a la historia de usuario.
+Push a cualquier rama que modifique archivos en src/
 
-- Reglas para Commits
+Pull requests que incluyan cambios en src/
 
-- Cada commit debe estar relacionado con un issue o historia de usuario.
+🧠 Funcionalidades
+🔍 Predicción de precios usando modelos de ML
 
-- Utilizar el formato convencional de commits:
+📩 Notificaciones automáticas (Telegram)
 
-- tipo: descripción breve (issue #X)
+🖥️ Interfaz interactiva desarrollada con React
 
-------------------------------------------------------------------------------------------------------------------------------
-# Especificaciones de implementacion tecnica:
+⚙️ Automatización de pruebas y builds con GitHub Actions
+
+🐳 Contenedores portables con Docker
+
 
 # Desarrollo y entrenamiento de IA:
 
@@ -59,4 +95,5 @@ El desarrollo sigue una metodología ágil con sprints. Cada sprint debe tener t
 
 
 Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki/FeedBack-Home-Wiki
+
 
