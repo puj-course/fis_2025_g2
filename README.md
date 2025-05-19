@@ -147,6 +147,6 @@ Pull requests que incluyan cambios en src/
   -Uso de algoritmo de scraping web en Python por medio de Selenium y BeautifulSoup4 (Olimpica, Jumbo, Exito, etc.).
 
 
-Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki/FeedBack-Home-Wiki
+Puedes encontrar mas informacion al respecto en nuestra Wiki: https://github.com/puj-course/fis_2025_g2/wiki
 
 
