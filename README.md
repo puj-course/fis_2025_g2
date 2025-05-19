@@ -23,51 +23,78 @@ Proyecto web completo que permite predecir precios de productos y enviar notific
 
 ## 📁 Estructura del Proyecto
 
-src/ 
+.
+├── .github/workflows/ # Pipelines CI/CD
 
-├── paginaweb/
+│ ├── Pipeline-PaginaWeb.yml
 
-│ ├── Backend/
+│ └── scraper-pipeline.yml
 
-│ │ ├── IA.py # Predicción con modelos de ML
+├── conf/ # Configuraciones personalizadas
+│ └── api/
 
-│ │ ├── notify.py # Envío de notificaciones (Telegram, etc.)
+├── docs/ # Documentación y recursos visuales
 
-│ │ ├── server.js # API Node.js / Interfaz con frontend
+│ ├── architecture/
 
-│ │ └── requirements.txt
+│ │ ├── Diagramas (png/pdf)
 
-│ ├── Components/ # Componentes React
+│ ├── Datos_Dane/
 
-│ ├── Controllers/ # Lógica de control del frontend
+│ ├── user_guide/, Requisitos, Seguridad, etc.
 
-│ ├── Models/ # Modelos de datos JS
+│ └── Base de Datos.pdf
 
-│ ├── Routers/ # Rutas JS
+├── jupyter/ # Notebooks exploratorios
 
-│ ├── Services/ # Servicios (API calls, etc.)
+│ ├── datasets/
 
-│ ├── views/ # Vistas de la aplicación
+│ └── notebooks/
 
-│ ├── App.jsx
+├── scripts/ # Scripts CLI y de automatización
 
-│ ├── main.jsx
+│ ├── deploy.sh
 
-│ ├── index.css
+│ ├── setup.sh
 
-│ └── Dockerfile.frontend
+│ ├── scraper.py
 
-├── tests/ # Pruebas backend y frontend
+│ ├── pruebas.py
 
-├── Dockerfile.backend
+│ └── test.sh
 
-├── docker-compose.yml
+├── src/
+│ ├── AI/ # Lógica de predicción ML
 
-└── .github/
+│ ├── main/ # Inicializadores generales
 
-└── workflows/
+│ └── paginaweb/ # Aplicación web completa
 
-└── ci.yml # Pipeline CI/CD
+│ ├── Backend/ # FastAPI, Telegram, IA en Python
+
+│ ├── Dockerfile.frontend
+
+│ └── Frontend en React (Vite)
+
+├── test/ # Pruebas de unidad e integración
+
+│ ├── test_example.py
+
+│ ├── server.test.js
+
+│ └── archivos de prueba (Excel)
+
+├── docker-compose.yml # Orquestación de servicios
+
+├── requirements.txt # Dependencias Python
+
+├── Makefile # Atajos para tareas comunes
+
+├── README.md
+
+├── LICENSE
+
+└── CONTRIBUTING.md
 
 
 ---
