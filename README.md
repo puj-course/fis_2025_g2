@@ -23,29 +23,52 @@ Proyecto web completo que permite predecir precios de productos y enviar notific
 
 ## 📁 Estructura del Proyecto
 
-src/
+src/ 
+
 ├── paginaweb/
+
 │ ├── Backend/
+
 │ │ ├── IA.py # Predicción con modelos de ML
+
 │ │ ├── notify.py # Envío de notificaciones (Telegram, etc.)
+
 │ │ ├── server.js # API Node.js / Interfaz con frontend
+
 │ │ └── requirements.txt
+
 │ ├── Components/ # Componentes React
+
 │ ├── Controllers/ # Lógica de control del frontend
+
 │ ├── Models/ # Modelos de datos JS
+
 │ ├── Routers/ # Rutas JS
+
 │ ├── Services/ # Servicios (API calls, etc.)
+
 │ ├── views/ # Vistas de la aplicación
+
 │ ├── App.jsx
+
 │ ├── main.jsx
+
 │ ├── index.css
+
 │ └── Dockerfile.frontend
+
 ├── tests/ # Pruebas backend y frontend
+
 ├── Dockerfile.backend
+
 ├── docker-compose.yml
+
 └── .github/
+
 └── workflows/
+
 └── ci.yml # Pipeline CI/CD
+
 
 ---
 
