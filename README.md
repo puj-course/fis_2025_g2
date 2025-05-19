@@ -12,10 +12,13 @@ Proyecto web completo que permite predecir precios de productos y enviar notific
 
 ---
 # Diagramas
-
+# Despliegue
 ![Diagrama de Despliegue](docs/Diagramas/Diagrama%20de%20despliegue.png)
+# Componentes
 ![Diagrama de Componentes](docs/Diagramas/Diagrama%20de%20componentes.png)
+# Clases
 ![Diagrama de Clases](docs/Diagramas/Diagrama%20de%20clases.png)
+# EBC
 ![Diagrama EBC](docs/Diagramas/Diagarma%20EBC.png)
 
 
